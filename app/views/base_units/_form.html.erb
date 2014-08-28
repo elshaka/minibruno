@@ -1,0 +1,23 @@
+<%= form_for(@base_unit) do |f| %>
+  <% if @base_unit.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @base_unit.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :unit, 'Unidad' %><br>
+    <%= f.text_field :unit %>
+  </div>
+  <div class="field">
+    <%= f.label :description, 'Descripción' %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Guardar' %>
+  </div>
+<% end %>

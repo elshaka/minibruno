@@ -1,0 +1,24 @@
+<h1>Tipos de estadísticas</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Descripción</th>
+      <th>Unidad</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stat_types.each do |stat_type| %>
+      <tr>
+        <td><%= stat_type.description %></td>
+        <td><%= stat_type.base_unit.nil? ? 'Sin unidad' : stat_type.base_unit.to_collection_select %></td>
+        <td><%= link_to 'Editar', edit_stat_type_path(stat_type) %></td>
+        <td><%= link_to 'Eliminar', stat_type, method: :delete, data: { confirm: '¿Esta seguro?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo tipo de estadística', new_stat_type_path %>

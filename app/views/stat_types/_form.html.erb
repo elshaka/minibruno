@@ -1,0 +1,24 @@
+<%= form_for(@stat_type) do |f| %>
+  <% if @stat_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stat_type.errors.count, "error") %> impidieron guardar este tipo de estadística:</h2>
+      <ul>
+      <% @stat_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :base_unit_id, 'Unidad' %><br>
+    <%= f.collection_select :base_unit_id, @base_units, :id, :to_collection_select, {include_blank: "Sin unidad"} %>
+  </div>
+  <div class="field">
+    <%= f.label :description, 'Descripción' %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Guardar' %>
+  </div>
+<% end %>
