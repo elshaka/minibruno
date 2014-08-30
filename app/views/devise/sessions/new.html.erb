@@ -3,7 +3,7 @@
 </div>
 <div class="panel-body">
   <%= render partial: 'layouts/notifications' %>
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f| %>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:role => 'form'}) do |f| %>
     <fieldset>
       <div class="form-group">
         <%= f.text_field :username, :autofocus => true, class: 'form-control', placeholder: 'Nombre de usuario' %>

@@ -15,7 +15,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'pundit'
 
-gem 'thinreports'
+gem 'thinreports-rails'
 gem 'imgkit'
 gem 'flot-rails'
 gem 'ruby-units'

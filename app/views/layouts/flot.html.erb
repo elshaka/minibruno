@@ -1,0 +1,12 @@
+<html>
+<head>
+  <script type="text/javascript">
+    <%= raw Minibruno::Application.assets.find_asset('jquery.min.js').body %>
+    <%= raw Minibruno::Application.assets.find_asset('jquery.flot.min.js').body %>
+  </script>
+</head>
+<body style="margin: 0; padding: 0">
+  <%= yield %>
+  <div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>
+</body>
+</html>

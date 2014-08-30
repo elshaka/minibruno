@@ -25,6 +25,7 @@ module Minibruno
 
     config.to_prepare do
       Devise::SessionsController.layout 'session'
+      Devise::RegistrationsController.layout 'session'
     end
   end
 end

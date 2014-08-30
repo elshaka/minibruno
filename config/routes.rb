@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   match 'stops' => 'stops#start', via: :post
   match 'stops' => 'stops#end', via: :put
 
-  match 'reports' => 'reports#index', via: :get, as: 'reports'
+  # Reports
+  get 'reports', to: 'reports#index'
+  post 'reports/test', to: 'reports#test', as: 'test_report'
 end

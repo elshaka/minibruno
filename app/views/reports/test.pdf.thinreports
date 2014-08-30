@@ -1,0 +1,6 @@
+report.set_layout tlf: 'reports/thinreports_layouts/test'
+report.start_new_page do |page|
+  page.item(:plot) do |plot|
+    plot.value(render_flot('test', nil, 350, 300))
+  end
+end
