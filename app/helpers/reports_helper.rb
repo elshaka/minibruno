@@ -2,21 +2,20 @@ module ReportsHelper
   @@ac = ApplicationController.new
 
   def render_flot(view, data, width, height)
-    File.open("tmp/#{view}.jpg", 'wb') do |file|
-      file << IMGKit.new(
-        @@ac.render_to_string(
-          "reports/#{view}.flot",
-          layout: 'flot',
-          locals: {
-            data: data,
-            width: width,
-            height: height
-          }
-        ),
-        crop_w: width,
-        crop_h: height
-      ).to_jpg
-      file.path
+    jpg_path = "tmp/#{view}.jpg"
+    html_path = "tmp/#{view}.html"
+    File.open(html_path, 'w') do |file|
+      file << @@ac.render_to_string(
+        "reports/#{view}.flot",
+        layout: 'flot',
+        locals: {
+          data: data,
+          width: width,
+          height: height
+        }
+      )
     end
+    %x(wkhtmltoimage --crop-h #{height} --crop-w #{width} #{html_path} #{jpg_path})
+    jpg_path
   end
 end
