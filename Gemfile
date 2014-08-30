@@ -16,7 +16,6 @@ gem 'devise'
 gem 'pundit'
 
 gem 'thinreports-rails'
-gem 'imgkit'
 gem 'flot-rails'
 gem 'ruby-units'
 
