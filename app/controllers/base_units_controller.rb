@@ -54,10 +54,14 @@ class BaseUnitsController < ApplicationController
   # DELETE /base_units/1
   # DELETE /base_units/1.json
   def destroy
-    @base_unit.destroy
     respond_to do |format|
-      format.html { redirect_to base_units_url, notice: 'Unidad base eliminada con éxito.' }
-      format.json { head :no_content }
+      if @base_unit.destroy
+        format.html { redirect_to base_units_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to base_units_url, alert: 'No se puede eliminar la unidad base porque tiene registros asociados' }
+        format.json { head :no_content, status: :bad_request }
+      end
     end
   end
 

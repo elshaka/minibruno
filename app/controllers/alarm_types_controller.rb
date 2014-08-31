@@ -7,11 +7,6 @@ class AlarmTypesController < ApplicationController
     @alarm_types = AlarmType.all
   end
 
-  # GET /alarm_types/1
-  # GET /alarm_types/1.json
-  def show
-  end
-
   # GET /alarm_types/new
   def new
     @alarm_type = AlarmType.new
@@ -28,7 +23,7 @@ class AlarmTypesController < ApplicationController
 
     respond_to do |format|
       if @alarm_type.save
-        format.html { redirect_to @alarm_type, notice: 'Alarm type was successfully created.' }
+        format.html { redirect_to alarm_types_url, notice: 'Tipo de alarma creada con éxito.' }
         format.json { render :show, status: :created, location: @alarm_type }
       else
         format.html { render :new }
@@ -42,7 +37,7 @@ class AlarmTypesController < ApplicationController
   def update
     respond_to do |format|
       if @alarm_type.update(alarm_type_params)
-        format.html { redirect_to @alarm_type, notice: 'Alarm type was successfully updated.' }
+        format.html { redirect_to @alarm_type, notice: 'Tipo de alarma actualizada creada con éxito.' }
         format.json { render :show, status: :ok, location: @alarm_type }
       else
         format.html { render :edit }
@@ -54,10 +49,14 @@ class AlarmTypesController < ApplicationController
   # DELETE /alarm_types/1
   # DELETE /alarm_types/1.json
   def destroy
-    @alarm_type.destroy
     respond_to do |format|
-      format.html { redirect_to alarm_types_url, notice: 'Alarm type was successfully destroyed.' }
-      format.json { head :no_content }
+      if @alarm_type.destroy
+        format.html { redirect_to alarm_types_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to alarm_types_url, alert: 'No se puede eliminar el tipo de alarma porque tiene registros asociados' }
+        format.json { head :no_content, status: :bad_request }
+      end
     end
   end
 

@@ -1,25 +1,35 @@
-<h1>Listing alarm_types</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @alarm_types.each do |alarm_type| %>
-      <tr>
-        <td><%= alarm_type.description %></td>
-        <td><%= link_to 'Show', alarm_type %></td>
-        <td><%= link_to 'Edit', edit_alarm_type_path(alarm_type) %></td>
-        <td><%= link_to 'Destroy', alarm_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Alarm type', new_alarm_type_path %>
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Tipos de alarmas</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Tipos de alarmas registradas</div>
+      <div class="panel-body">
+        <%= render partial: 'layouts/notifications' %>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @alarm_types.each do |alarm_type| %>
+              <tr>
+                <td><%= alarm_type.description %></td>
+                <td>
+                  <%= link_to 'Editar', edit_alarm_type_path(alarm_type), class: 'btn btn-info btn-sm' %>
+                  <%= link_to 'Eliminar', alarm_type, method: :delete, data: { confirm: '¿Esta seguro?' }, class: 'btn btn-danger btn-sm' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Nuevo tipo de alarma', new_alarm_type_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

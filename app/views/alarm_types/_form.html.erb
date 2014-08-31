@@ -1,21 +1,19 @@
-<%= form_for(@alarm_type) do |f| %>
+<%= form_for(@alarm_type, html: {role: 'form'}) do |f| %>
   <% if @alarm_type.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@alarm_type.errors.count, "error") %> prohibited this alarm_type from being saved:</h2>
-
       <ul>
-      <% @alarm_type.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @alarm_type.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+  <div class="form-group">
+    <%= f.label :description, 'Descripción', class: 'control-label' %><br>
+    <%= f.text_field :description, class: 'form-control' %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= link_to 'Regresar', alarm_types_path, class: 'btn btn-default' %>
+    <%= f.submit 'Guardar', class: 'btn btn-success' %>
   </div>
 <% end %>

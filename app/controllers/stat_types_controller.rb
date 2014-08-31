@@ -5,7 +5,7 @@ class StatTypesController < ApplicationController
   # GET /stat_types
   # GET /stat_types.json
   def index
-    @stat_types = StatType.all
+    @stat_types = StatType.includes(:base_unit)
   end
 
   # GET /stat_types/1
@@ -55,10 +55,14 @@ class StatTypesController < ApplicationController
   # DELETE /stat_types/1
   # DELETE /stat_types/1.json
   def destroy
-    @stat_type.destroy
     respond_to do |format|
-      format.html { redirect_to stat_types_url }
-      format.json { head :no_content }
+      if @stat_type.destroy
+        format.html { redirect_to stat_types_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to stat_types_url, alert: 'No se puede eliminar el tipo de estadística porque tiene registros asociados' }
+        format.json { head :no_content, status: :bad_request }
+      end
     end
   end
 

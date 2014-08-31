@@ -1,5 +1,16 @@
-<h1>Nueva unidad base</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Regresar', base_units_path %>
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Unidades base</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Nueva unidad base</div>
+      <div class="panel-body">
+        <%= render partial: 'layouts/notifications' %>
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>

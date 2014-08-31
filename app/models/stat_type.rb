@@ -2,12 +2,10 @@ class StatType < ActiveRecord::Base
   belongs_to :base_unit
   has_many :stats
 
+  validates :description, presence: true
   before_destroy :check_stats
 
   def check_stats
-    if stats.any?
-      errors[:base] << "no se puede eliminar el tipo de estadística porque tiene registros asociados"
-    end
-    false
+    stats.empty?
   end
 end

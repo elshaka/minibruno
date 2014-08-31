@@ -17,4 +17,5 @@
 //= require jquery.flot
 //= require jquery.flot.pie
 //= require jquery.flot.resize
+//= require selectize
 //= require_tree .
