@@ -3,13 +3,15 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :alarm_types
+  resources :alarm_types, except: :show
 
-  resources :base_units
+  resources :base_units, except: :show
 
-  resources :stat_types
+  resources :stat_types, except: :show
 
   match 'stats' => 'stats#create', via: :post
+
+  match 'alarms' => 'alarms#create', via: :post
 
   match 'stops' => 'stops#start', via: :post
   match 'stops' => 'stops#end', via: :put
