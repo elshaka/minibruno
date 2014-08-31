@@ -37,7 +37,7 @@ class AlarmTypesController < ApplicationController
   def update
     respond_to do |format|
       if @alarm_type.update(alarm_type_params)
-        format.html { redirect_to @alarm_type, notice: 'Tipo de alarma actualizada creada con éxito.' }
+        format.html { redirect_to alarm_types_url, notice: 'Tipo de alarma actualizada creada con éxito.' }
         format.json { render :show, status: :ok, location: @alarm_type }
       else
         format.html { render :edit }
