@@ -28,8 +28,7 @@ module Minibruno
       Devise::RegistrationsController.layout 'session'
     end
 
-    config.time_zone = 'Caracas'
-    config.active_record.default_timezone = 'Caracas'
-
+    config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_attributes = false
   end
 end
