@@ -12,6 +12,7 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Descripción</th>
               <th>Unidad</th>
               <th>Acciones</th>
@@ -20,6 +21,7 @@
           <tbody>
             <% @stat_types.each do |stat_type| %>
               <tr>
+                <td><%= stat_type.id %></td>
                 <td><%= stat_type.description %></td>
                 <td><%= stat_type.base_unit.nil? ? 'Sin unidad' : stat_type.base_unit.to_collection_select %></td>
                 <td>
