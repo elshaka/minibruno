@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :alarm_types, :base_units, :stat_types, except: :show
 
   post 'stats', to: 'stats#create'
+  post 'stats/multiple', to: 'stats#create_multiple'
   post 'alarms', to: 'alarms#create'
   post 'stops', to: 'stops#start'
   put 'stops', to: 'stops#end'

@@ -1,4 +1,4 @@
-<% placeholder = action_name == 'edit' ? 'Dejar en blanco si no desea cambiar su contraseña' : '' %>
+<% placeholder = action_name == 'edit' ? 'Dejar en blanco si no desea cambiar la contraseña' : '' %>
 <%= form_for(@user, html: {role: 'form'}) do |f| %>
   <%= render partial: 'layouts/resource_errors', locals: {resource: @user} %>
   <div class="form-group">

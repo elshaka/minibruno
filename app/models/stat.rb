@@ -4,5 +4,5 @@ class Stat < ActiveRecord::Base
 
   validates :value, numericality: true
   validates :set_point, numericality: {allow_nil: true}
-  validates :stat_type, presence: true
+  validates :stat_type_id, presence: true
 end
