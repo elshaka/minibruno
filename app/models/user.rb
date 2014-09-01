@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def remember_me
-    true
+    not admin?
   end
 
   def email_required?

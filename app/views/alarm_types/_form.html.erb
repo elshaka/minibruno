@@ -1,5 +1,5 @@
 <%= form_for(@alarm_type, html: {role: 'form'}) do |f| %>
-  <%= render partial: 'layouts/resource_errors' %>
+  <%= render partial: 'layouts/resource_errors', locals: {resource: @alarm_type} %>
   <div class="form-group">
     <%= f.label :description, 'Descripción', class: 'control-label' %><br>
     <%= f.text_field :description, class: 'form-control' %>

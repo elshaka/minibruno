@@ -1,5 +1,5 @@
 <%= form_for(@base_unit, html: {role: 'form'}) do |f| %>
-  <%= render partial: 'layouts/resource_errors' %>
+  <%= render partial: 'layouts/resource_errors', locals: {resource: @base_unit} %>
   <div class="form-group">
     <%= f.label :unit, 'Unidad', class: 'control-label' %><br>
     <%= f.text_field :unit, class: 'form-control' %>

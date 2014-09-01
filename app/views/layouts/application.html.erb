@@ -17,8 +17,10 @@
           <i class="fa fa-user fa-fw"></i> <%= current_user.fullname %> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-          <%= navbar_menu_item('Configuración', 'gear', '#') %>
-          <li class="divider"></li>
+          <% unless current_user.admin? %>
+            <%= navbar_menu_item('Configuración', 'gear', user_settings_path) %>
+            <li class="divider"></li>
+          <% end %>
           <%= navbar_menu_item('Salir', 'sign-out', destroy_user_session_path, method: :delete) %>
         </ul>
         <!-- /.dropdown-user -->

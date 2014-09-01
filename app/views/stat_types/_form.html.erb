@@ -1,5 +1,5 @@
 <%= form_for(@stat_type, html: {role: 'form'}) do |f| %>
-  <%= render partial: 'layouts/resource_errors' %>
+  <%= render partial: 'layouts/resource_errors', locals: {resource: @stat_type} %>
   <div class="form-group">
     <%= f.label :base_unit_id, 'Unidad', class: 'control-label' %><br>
     <%= f.collection_select :base_unit_id, @base_units, :id, :to_collection_select, {include_blank: 'Sin unidad'}, class: 'selectizable' %>

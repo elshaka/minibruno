@@ -1,7 +1,10 @@
 class UsersController < Devise::RegistrationsController
   skip_before_filter :require_no_authentication
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_current_user, only: [:settings, :update_settings]
   before_action :set_roles, except: [:destroy]
+  before_action :raise_if_admin, only: [:edit, :update, :settings, :update_settings]
+  before_action :redirect_to_sign_in, except: [:sign_in]
 
   def index
     @users = User.registered.all
@@ -51,9 +54,28 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  def settings
+  end
+
+  def update_settings
+    respond_to do |format|
+      if @user.update(user_settings_params)
+        format.html { redirect_to root_path, notice: 'Configuración de usuario actualizada con éxito.' }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html { render :settings }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_current_user
+      @user = current_user
     end
 
     def set_roles
@@ -62,5 +84,17 @@ class UsersController < Devise::RegistrationsController
 
     def user_params
       params.require(:user).permit([:username, :fullname, :role_id, :password, :password_confirmation])
+    end
+
+    def user_settings_params
+      params.require(:user).permit([:username, :fullname, :password, :password_confirmation])
+    end
+
+    def raise_if_admin
+      raise 'Fuck off' if @user.admin?
+    end
+
+    def redirect_to_sign_in
+      redirect_to new_user_session_path unless user_signed_in?
     end
 end

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
     resources :users
+    get 'user_settings', to: 'users#settings', as: 'user_settings'
+    post 'user_settings', to: 'users#update_settings'
   end
 
   resources :alarm_types, :base_units, :stat_types, except: :show
