@@ -2,21 +2,17 @@ Rails.application.routes.draw do
   root 'dashboard#index'
 
   devise_for :users
+  devise_scope :user do
+    resources :users
+  end
 
-  resources :alarm_types, except: :show
+  resources :alarm_types, :base_units, :stat_types, except: :show
 
-  resources :base_units, except: :show
+  post 'stats', to: 'stats#create'
+  post 'alarms', to: 'alarms#create'
+  post 'stops', to: 'stops#start'
+  put 'stops', to: 'stops#end'
 
-  resources :stat_types, except: :show
-
-  match 'stats' => 'stats#create', via: :post
-
-  match 'alarms' => 'alarms#create', via: :post
-
-  match 'stops' => 'stops#start', via: :post
-  match 'stops' => 'stops#end', via: :put
-
-  # Reports
   get 'reports', to: 'reports#index'
   post 'reports/test', to: 'reports#test', as: 'test_report'
 end

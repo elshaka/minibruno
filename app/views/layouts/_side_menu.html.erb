@@ -1,10 +1,11 @@
 <%= navbar_menu_item('Inicio', 'dashboard', root_path) %>
 <%= navbar_menu_item('Reportes', 'bar-chart-o', reports_path) %>
+<%= navbar_menu_item('Usuarios', 'users', users_path) %>
 <li class="<%= %w(base_units stat_types alarm_types).include?(controller_name) ? 'active' : '' %>">
   <a href="#"><i class="fa fa-gear fa-fw"></i> Opciones avanzadas<span class="fa arrow"></span></a>
   <ul class="nav nav-second-level">
     <%= navbar_menu_item('Unidades base', 'flask', base_units_path) %>
-    <%= navbar_menu_item('Tipos de estadísticas', 'tachometer', stat_types_path) %>
+    <%= navbar_menu_item('Tipos de estadísticas', 'edit', stat_types_path) %>
     <%= navbar_menu_item('Tipos de alarmas', 'bell', alarm_types_path) %>
   </ul>
 </li>

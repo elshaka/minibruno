@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Usuarios</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Usuarios registrados</div>
+      <div class="panel-body">
+        <%= render partial: 'layouts/notifications' %>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Nombre de usuario</th>
+              <th>Nombre completo</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.username %></td>
+                <td><%= user.fullname %></td>
+                <td><%= @roles[user.role_id] %></td>
+                <td>
+                  <%= link_to 'Editar', edit_user_path(user), class: 'btn btn-info btn-sm' %>
+                  <%= link_to 'Eliminar', user, method: :delete, data: { confirm: '¿Esta seguro?' }, class: 'btn btn-danger btn-sm' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Nueva usuario', new_user_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

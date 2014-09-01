@@ -1,13 +1,5 @@
 <%= form_for(@alarm_type, html: {role: 'form'}) do |f| %>
-  <% if @alarm_type.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @alarm_type.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: 'layouts/resource_errors' %>
   <div class="form-group">
     <%= f.label :description, 'Descripción', class: 'control-label' %><br>
     <%= f.text_field :description, class: 'form-control' %>

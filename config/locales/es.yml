@@ -197,5 +197,6 @@ es:
     username: Nombre de usuario
     fullname: Nombre completo
     password: Contraseña
+    role_id: Rol
     password_confirmation: Confirmar contraseña
     remember_me: Recordar credenciales

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825220205) do
+ActiveRecord::Schema.define(version: 20140901140402) do
 
   create_table "alarm_types", force: true do |t|
     t.string   "description"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140825220205) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role_id",                default: 2,  null: false
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
