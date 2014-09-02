@@ -12,6 +12,8 @@ gem 'actionpack-xml_parser'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'bootstrap-sass'
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.1.2'
 gem 'selectize-rails'
 gem 'nokogiri'
 gem 'devise'

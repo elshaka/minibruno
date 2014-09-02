@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   put 'stops', to: 'stops#end'
 
   get 'reports', to: 'reports#index'
-  post 'reports/test', to: 'reports#test', as: 'test_report'
+  post 'reports/variable', to: 'reports#variable', as: 'variable_report'
 end

@@ -15,7 +15,11 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require jquery.flot
+//= require jquery.flot.symbol
 //= require jquery.flot.time
 //= require jquery.flot.resize
 //= require selectize
+//= require moment
+//= require moment/es
+//= require bootstrap-datetimepicker
 //= require_tree .

@@ -11,15 +11,19 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#test">Variables controladas</a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#test">Variable en el tiempo</a>
         </h4>
       </div>
       <div id="test" class="panel-collapse collapse in">
         <div class="panel-body">
-          <%= form_for :report, :url=>test_report_path(format: 'pdf'), :html => {:role => 'form'} do |f| %>
+          <%= form_for :report, :url=>variable_report_path(format: 'pdf'), :html => {:role => 'form'} do |f| %>
             <div class="form-group">
               <%= f.label :stat_type_id, 'Variable', class: 'control-label' %>
               <%= f.collection_select :stat_type_id, @stat_types, :id, :description, {include_blank: false}, class: 'selectizable' %>
+            </div>
+            <div class="form-group">
+              <%= f.label :date, 'Fecha', class: 'control-label' %>
+              <%= f.text_field :date, class: 'form-control datepicker' %>
             </div>
             <%= f.submit 'Generar reporte', :class => 'btn btn-primary' %>
           <% end %>

@@ -1,0 +1,50 @@
+<script type="text/javascript">
+  $(function() {
+    var values = [];
+    var set_points = [];
+    var autos = [];
+    <% data[:stats][:values].each_with_index do |value, index| %>
+      values.push([<%= data[:stats][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    <% if data[:controllable] %>
+      <% data[:stats][:set_points].each_with_index do |set_point, index| %>
+        set_points.push([<%= data[:stats][:timestamps][index] %>, <%= set_point %>]);
+        autos.push([<%= data[:stats][:timestamps][index] %>, "<%= data[:stats][:autos][index] ? 'Auto' : 'Manual' %>"]);
+      <% end %>
+    <% end %>
+    $.plot(
+      "#plot",
+      [
+        {label: "Valor", data: values, yaxis: 1, color: "#00f", lines: {show: false}, points: {show: true, radius: 1}},
+        {label: "Set point", data: set_points, yaxis: 1, color: "#0f0", lines: {show: false}, points: {show: true, symbol: "square", radius: 1}},
+        <% if data[:controllable] %>
+          {label: "Autom&aacute;tico/Manual", data: autos, yaxis: 2, color: "f00", lines: {show: false}, points: {show: true, symbol: "square", radius: 1}}
+        <% end %>
+      ],
+      {
+        xaxis: {
+          mode: "time",
+          timezone: "browser",
+          timeformat: "%I:%M %p"
+        },
+        yaxes: [
+          {},
+            {
+              max: 4,
+              min: -1,
+              tickSize: 1,
+              position: "right",
+              mode: "categories",
+              categories: ["Manual", "Auto"]
+            }
+        ],
+        legend: {
+          show: <%= data[:controllable] %>,
+          labelBoxBorderColor: "none",
+          position: "se"
+        }
+      }
+    );
+  });
+</script>
+<div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>
