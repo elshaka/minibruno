@@ -15,6 +15,7 @@
               <th>ID</th>
               <th>Descripción</th>
               <th>Unidad</th>
+              <th>Controlable</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -24,6 +25,7 @@
                 <td><%= stat_type.id %></td>
                 <td><%= stat_type.description %></td>
                 <td><%= stat_type.base_unit.nil? ? 'Sin unidad' : stat_type.base_unit.to_collection_select %></td>
+                <td><%= stat_type.controllable ? 'Sí' : 'No' %></td>
                 <td>
                   <%= link_to 'Editar', edit_stat_type_path(stat_type), class: 'btn btn-info btn-sm' %>
                   <%= link_to 'Eliminar', stat_type, method: :delete, data: { confirm: '¿Esta seguro?' }, class: 'btn btn-danger btn-sm' %>

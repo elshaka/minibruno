@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140901140402) do
+ActiveRecord::Schema.define(version: 20140902161717) do
 
   create_table "alarm_types", force: true do |t|
     t.string   "description"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140901140402) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "controllable", default: false, null: false
   end
 
   create_table "stats", force: true do |t|

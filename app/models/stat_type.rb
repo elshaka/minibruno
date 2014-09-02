@@ -5,6 +5,7 @@ class StatType < ActiveRecord::Base
   validates :description, presence: true
   before_destroy :check_stats
 
+  scope :controllable, -> { where controllable: true }
   def check_stats
     stats.empty?
   end

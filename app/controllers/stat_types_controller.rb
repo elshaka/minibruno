@@ -1,6 +1,6 @@
 class StatTypesController < ApplicationController
   before_action :set_stat_type, only: [:show, :edit, :update, :destroy]
-  before_action :set_base_units, inly: [:new, :edit]
+  before_action :set_base_units, only: [:new, :edit]
 
   # GET /stat_types
   # GET /stat_types.json
@@ -78,6 +78,6 @@ class StatTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stat_type_params
-      params.require(:stat_type).permit(:base_unit_id, :description)
+      params.require(:stat_type).permit(:base_unit_id, :description, :controllable)
     end
 end

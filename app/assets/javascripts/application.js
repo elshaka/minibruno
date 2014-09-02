@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require jquery.flot
-//= require jquery.flot.pie
+//= require jquery.flot.time
 //= require jquery.flot.resize
 //= require selectize
 //= require_tree .
