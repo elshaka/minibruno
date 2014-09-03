@@ -16,7 +16,7 @@ class StatsController < ApplicationController
     user_id = current_user.id
     Stat.transaction do
       params[:stats].each do |stat_params|
-        stat_params = stat_params.permit(:stat_type_id, :value, :set_point, :auto)
+        stat_params = stat_params.permit(:stat_type_id, :value, :set_point, :auto, :created_at)
         stat = Stat.new(stat_params.merge({user_id: user_id}))
         unless stat.save
           errors << stat.errors
