@@ -15,6 +15,13 @@ ready = ->
   datepickers.each ->
     $(this).data('DateTimePicker').setDate new Date
     return
+  timepickers = $('.timepicker-b3')
+  timepickers.datetimepicker({
+    format: 'hh:mm A'
+    pick12HourFormat: true,
+    pickDate: false,
+    language: 'es',
+  })
   return
 
 $(document).ready(ready)

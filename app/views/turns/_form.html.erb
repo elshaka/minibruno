@@ -1,29 +1,27 @@
-<%= form_for(@turn) do |f| %>
-  <% if @turn.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@turn.errors.count, "error") %> prohibited this turn from being saved:</h2>
-
-      <ul>
-      <% @turn.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :start_time %><br>
-    <%= f.time_select :start_time %>
+<%= form_for(@turn, html: {role: 'form'}) do |f| %>
+  <%= render partial: 'layouts/resource_errors', locals: {resource: @turn} %>
+  <div class="form-group">
+    <%= f.label :name, class: 'control-label' %><br>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :end_time %><br>
-    <%= f.time_select :end_time %>
+  <div class="form-group">
+    <%= f.label :start_time, class: 'control-label' %><br>
+    <% if action_name == 'edit' %> 
+      <%= f.text_field :start_time, value: @turn.start_time.strftime('%I:%M %p'), class: 'form-control timepicker-b3' %>
+    <% else %>
+      <%= f.text_field :start_time, class: 'form-control timepicker-b3' %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+  <div class="form-group">
+    <%= f.label :end_time, class: 'control-label' %><br>
+    <% if action_name == 'edit' %> 
+      <%= f.text_field :end_time, value: @turn.end_time.strftime('%I:%M %p'), class: 'form-control timepicker-b3' %>
+    <% else %>
+      <%= f.text_field :end_time, class: 'form-control timepicker-b3' %>
+    <% end %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= link_to 'Regresar', turns_path, class: 'btn btn-default' %>
+    <%= f.submit 'Guardar', class: 'btn btn-success' %>
   </div>
 <% end %>

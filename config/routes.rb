@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :turns
-
   root 'dashboard#index'
 
   devise_for :users
@@ -10,7 +8,7 @@ Rails.application.routes.draw do
     post 'user_settings', to: 'users#update_settings'
   end
 
-  resources :alarm_types, :base_units, :stat_types, except: :show
+  resources :alarm_types, :base_units, :stat_types, :turns, except: :show
 
   post 'stats', to: 'stats#create'
   post 'stats/multiple', to: 'stats#create_multiple'

@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 20140903194258) do
   end
 
   create_table "turns", force: true do |t|
+    t.string   "name"
     t.time     "start_time"
     t.time     "end_time"
-    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

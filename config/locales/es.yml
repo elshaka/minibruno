@@ -200,3 +200,6 @@ es:
     role_id: Rol
     password_confirmation: Confirmar contraseña
     remember_me: Recordar credenciales
+    start_time: Inicio
+    end_time: Fin
+    name: Nombre

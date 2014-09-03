@@ -29,7 +29,7 @@ class StatTypesController < ApplicationController
 
     respond_to do |format|
       if @stat_type.save
-        format.html { redirect_to stat_types_url, notice: 'Tipo de estadística creada con éxito.' }
+        format.html { redirect_to stat_types_url, notice: 'Variable creada con éxito.' }
         format.json { render :show, status: :created, location: @stat_type }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class StatTypesController < ApplicationController
   def update
     respond_to do |format|
       if @stat_type.update(stat_type_params)
-        format.html { redirect_to stat_types_url, notice: 'Tipo de estadística actualizada con éxito.' }
+        format.html { redirect_to stat_types_url, notice: 'Variable actualizada con éxito.' }
         format.json { render :show, status: :ok, location: @stat_type }
       else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class StatTypesController < ApplicationController
         format.html { redirect_to stat_types_url }
         format.json { head :no_content }
       else
-        format.html { redirect_to stat_types_url, alert: 'No se puede eliminar el tipo de estadística porque tiene registros asociados' }
+        format.html { redirect_to stat_types_url, alert: 'No se puede eliminar la variable porque tiene registros asociados' }
         format.json { head :no_content, status: :bad_request }
       end
     end
