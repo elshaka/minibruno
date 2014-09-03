@@ -37,6 +37,6 @@ class StatsController < ApplicationController
   private
 
   def stat_params
-    params.require(:stat).permit(:stat_type_id, :value, :set_point, :auto)
+    params.require(:stat).permit(:stat_type_id, :value, :set_point, :auto, :created_at)
   end
 end

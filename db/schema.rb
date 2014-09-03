@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902161717) do
+ActiveRecord::Schema.define(version: 20140903194258) do
 
   create_table "alarm_types", force: true do |t|
     t.string   "description"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20140902161717) do
     t.integer  "user_id"
     t.string   "description"
     t.datetime "ended_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "turns", force: true do |t|
+    t.time     "start_time"
+    t.time     "end_time"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

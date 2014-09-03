@@ -1,0 +1,29 @@
+<h1>Listing turns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start time</th>
+      <th>End time</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @turns.each do |turn| %>
+      <tr>
+        <td><%= turn.start_time %></td>
+        <td><%= turn.end_time %></td>
+        <td><%= turn.description %></td>
+        <td><%= link_to 'Show', turn %></td>
+        <td><%= link_to 'Edit', edit_turn_path(turn) %></td>
+        <td><%= link_to 'Destroy', turn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Turn', new_turn_path %>
