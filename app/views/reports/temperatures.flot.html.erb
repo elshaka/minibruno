@@ -1,0 +1,34 @@
+<script type="text/javascript">
+  $(function() {
+    var datasets = [];
+    <% data[:temperatures].each do |temperature| %>
+      var values = []
+      <% temperature[:stats][:values].each_with_index do |value, index| %>
+        values.push([<%= temperature[:stats][:timestamps][index] %>, <%= value %>]);
+      <% end %>
+      datasets.push({
+        label: "<%= temperature[:description] %>",
+        data: values,
+        lines: {show: false}, points: {show: true, radius: 1}
+      })
+    <% end %>
+    $.plot(
+      "#plot",
+      datasets,
+      {
+        xaxis: {
+          mode: "time",
+          timezone: "browser",
+          timeformat: "%I:%M %p"
+        },
+        colors: ["#00f", "#ff0", "#ff8000", "#f00"],
+        legend: {
+          show: true,
+          labelBoxBorderColor: "none",
+          position: "se"
+        }
+      }
+    );
+  });
+</script>
+<div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>

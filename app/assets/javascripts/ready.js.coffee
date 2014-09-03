@@ -6,14 +6,15 @@ ready = ->
   # Selectizable
   $('.selectizable').selectize()
   # Datepicker
-  datepickers = $('.datepicker')
+  datepickers = $('.datepicker-b3')
   datepickers.datetimepicker({
     format: 'YYYY-MM-DD',
     pickTime: false,
     language: 'es'
   })
-  datepickers.setDate(new Date())
-
+  datepickers.each ->
+    $(this).data('DateTimePicker').setDate new Date
+    return
   return
 
 $(document).ready(ready)

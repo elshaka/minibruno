@@ -1,0 +1,8 @@
+report.set_layout tlf: 'reports/thinreports_layouts/temperatures'
+report.start_new_page do |page|
+  page.item(:plot) do |plot|
+    plot.value(render_flot('temperatures', @data, 1000, 666))
+  end
+  page.item(:title).value(@data[:title])
+  page.item(:date).value(@data[:date])
+end
