@@ -3,7 +3,8 @@ class Report
     return nil if params[:date].blank?
     temperature_types = StatType.where(base_unit_id: 1)
     return nil if temperature_types.empty?
-    time_range = generate_time_range(params)
+    time_range = generate_time_range(params) rescue nil
+    return nil if time_range = nil
     temperatures = []
     temperature_types.each do |temperature_type|
       stats = Stat.where(stat_type_id: temperature_type.id)
@@ -31,7 +32,8 @@ class Report
 
   def self.variable(params)
     return nil if params[:date].blank?
-    time_range = generate_time_range(params)
+    time_range = generate_time_range(params) rescue nil
+    return nil if time_range = nil
     stats = Stat
       .where(stat_type_id: params[:stat_type_id])
       .where(created_at: time_range)
