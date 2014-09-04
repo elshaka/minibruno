@@ -4,10 +4,17 @@
     var set_points = [];
     var autos = [];
     <% data[:stats][:values].each_with_index do |value, index| %>
+      <% if data[:stats][:timestamps][index] - data[:stats][:timestamps][index - 1] > 300000 %>
+        values.push(null);
+      <% end %>
       values.push([<%= data[:stats][:timestamps][index] %>, <%= value %>]);
     <% end %>
     <% if data[:controllable] %>
       <% data[:stats][:set_points].each_with_index do |set_point, index| %>
+        <% if data[:stats][:timestamps][index] - data[:stats][:timestamps][index - 1] > 300000 %>
+          set_points.push(null);
+          autos.push(null);
+        <% end %>
         set_points.push([<%= data[:stats][:timestamps][index] %>, <%= set_point %>]);
         autos.push([<%= data[:stats][:timestamps][index] %>, "<%= data[:stats][:autos][index] ? 'Auto' : 'Manual' %>"]);
       <% end %>
@@ -15,10 +22,10 @@
     $.plot(
       "#plot",
       [
-        {label: "Valor", data: values, yaxis: 1, color: "#00f", lines: {show: false}, points: {show: true, radius: 1}},
-        {label: "Set point", data: set_points, yaxis: 1, color: "#0f0", lines: {show: false}, points: {show: true, symbol: "square", radius: 1}},
+        {label: "Valor", data: values, yaxis: 1, color: "#00f"},
+        {label: "Set point", data: set_points, yaxis: 1, color: "#0f0"},
         <% if data[:controllable] %>
-          {label: "Auto/Manual", data: autos, yaxis: 2, color: "f00", lines: {show: false}, points: {show: true, symbol: "square", radius: 1}}
+          {label: "Auto/Manual", data: autos, yaxis: 2, color: "f00"}
         <% end %>
       ],
       {

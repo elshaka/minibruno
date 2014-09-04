@@ -4,12 +4,14 @@
     <% data[:temperatures].each do |temperature| %>
       var values = []
       <% temperature[:stats][:values].each_with_index do |value, index| %>
+        <% if temperature[:stats][:timestamps][index] - temperature[:stats][:timestamps][index - 1] > 300000 %>
+          values.push(null);
+        <% end %>
         values.push([<%= temperature[:stats][:timestamps][index] %>, <%= value %>]);
       <% end %>
       datasets.push({
         label: "<%= temperature[:description] %>",
         data: values,
-        lines: {show: false}, points: {show: true, radius: 1}
       })
     <% end %>
     $.plot(
