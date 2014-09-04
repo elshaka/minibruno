@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903194258) do
+ActiveRecord::Schema.define(version: 20140904124309) do
 
   create_table "alarm_types", force: true do |t|
     t.string   "description"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20140903194258) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "stats", ["created_at"], name: "index_stats_on_created_at", using: :btree
 
   create_table "stops", force: true do |t|
     t.integer  "user_id"
