@@ -13,6 +13,7 @@
           <thead>
             <tr>
               <th>ID</th>
+              <th>Código</th>
               <th>Descripción</th>
               <th>Acciones</th>
             </tr>
@@ -21,6 +22,7 @@
             <% @alarm_types.each do |alarm_type| %>
               <tr>
                 <td><%= alarm_type.id %></td>
+                <td><%= alarm_type.code %></td>
                 <td><%= alarm_type.description %></td>
                 <td>
                   <%= link_to 'Editar', edit_alarm_type_path(alarm_type), class: 'btn btn-info btn-sm' %>

@@ -68,6 +68,6 @@ class AlarmTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def alarm_type_params
-      params.require(:alarm_type).permit(:description)
+      params.require(:alarm_type).permit(:description, :code)
     end
 end

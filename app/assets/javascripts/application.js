@@ -23,3 +23,5 @@
 //= require moment/es
 //= require bootstrap-datetimepicker
 //= require_tree .
+//= stub html5shiv
+//= stub respond

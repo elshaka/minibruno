@@ -327,21 +327,21 @@ table.dataTable thead .sorting:after {
 }
 
 .panel-yellow {
-    border-color: #cc0;
+    border-color: #fe0;
 }
 
 .panel-yellow .panel-heading {
-    border-color: #cc0;
+    border-color: #fe0;
     color: #fff;
-    background-color: #cc0;
+    background-color: #fe0;
 }
 
 .panel-yellow a {
-    color: #cc0;
+    color: #fe0;
 }
 
 .panel-yellow a:hover {
-    color: #bb0;
+    color: #fe0;
 }
 
 .panel-orange {
