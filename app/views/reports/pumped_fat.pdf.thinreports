@@ -1,7 +1,7 @@
 report.set_layout tlf: 'reports/thinreports_layouts/discharges_and_temperatures'
 report.start_new_page do |page|
   page.item(:plot) do |plot|
-    plot.value(render_flot('discharges_and_temperatures', @data, 1000, 666))
+    plot.value(render_flot('pumped_fat', @data, 1000, 666))
   end
   page.item(:title).value(@data[:title])
   page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
@@ -10,10 +10,10 @@ end
 
 report.set_layout tlf: 'reports/thinreports_layouts/discharges_and_temperatures_turns'
 
-total_discharges = @data[:total_discharges]
+total_pumped_fat = @data[:total_pumped_fat]
 report.layout.config.list(:table) do
   events.on :footer_insert do |e|
-    e.section.item(:total).value("#{total_discharges.round()} Kg")
+    e.section.item(:total).value("#{total_pumped_fat.round()} L")
   end
 end
 
@@ -21,9 +21,9 @@ report.start_new_page do |page|
   page.item(:title).value(@data[:title])
   page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
   page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
-  @data[:turn_discharges].each do |turn_discharge|
+  @data[:turn_pumped_fat].each do |tpf|
     report.list(:table)
-      .add_row turn_name: turn_discharge[:name],
-               total_turn: "#{turn_discharge[:total].round()} Kg"
+      .add_row turn_name: tpf[:name],
+               total_turn: "#{tpf[:total].round()} L"
   end
 end

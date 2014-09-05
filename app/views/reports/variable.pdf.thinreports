@@ -4,5 +4,6 @@ report.start_new_page do |page|
     plot.value(render_flot('variable', @data, 1000, 666))
   end
   page.item(:title).value(@data[:title])
-  page.item(:date).value(@data[:date])
+  page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
+  page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
 end

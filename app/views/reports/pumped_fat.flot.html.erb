@@ -1,0 +1,48 @@
+<script type="text/javascript">
+  $(function() {
+    var pumped_fat = [];
+    var accumulateds = [];
+    <% accumulated = 0 %>;
+    <% data[:pumped_fat][:values].each_with_index do |value, index| %>
+      <% if data[:pumped_fat][:timestamps][index] - data[:pumped_fat][:timestamps][index - 1] > 300000 %>
+        pumped_fat.push(null);
+      <% end %>
+      <% accumulated = accumulated + value %>
+      pumped_fat.push([<%= data[:pumped_fat][:timestamps][index] %>, <%= value %>]);
+      accumulateds.push([<%= data[:pumped_fat][:timestamps][index] %>, <%= accumulated %>]);
+    <% end %>
+    $.plot(
+      "#plot",
+      [
+        {label: "Grasa bombeada", yaxis: 1, data: pumped_fat, color: "#0f0",
+          bars: {
+            show: true,
+            barWidth: 120000
+          }
+        },
+        {label: "Acumulado", yaxis: 1, data: accumulateds, color: "#0ff"}
+      ],
+      {
+        xaxis: {
+          mode: "time",
+          timezone: "browser",
+          timeformat: "%I:%M %p",
+          min: <%= data[:start_time].to_time.to_i * 1000 %>,
+          max: <%= data[:end_time].to_time.to_i * 1000 %>
+        },
+        yaxes: [
+          {},
+            {
+              position: "right",
+            }
+        ],
+        legend: {
+          show: true,
+          labelBoxBorderColor: "none",
+          position: "se"
+        }
+      }
+    );
+  });
+</script>
+<div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>

@@ -5,4 +5,8 @@ class Stat < ActiveRecord::Base
   validates :value, numericality: true
   validates :set_point, numericality: {allow_nil: true}
   validates :stat_type_id, presence: true
+
+  def self.get_dashboard_stats
+    nil
+  end
 end

@@ -37,12 +37,12 @@
         xaxis: {
           mode: "time",
           timezone: "browser",
-          timeformat: "%I:%M %p"
+          timeformat: "%I:%M %p",
+          min: <%= data[:start_time].to_time.to_i * 1000 %>,
+          max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
         yaxes: [
-          {
-            label: "hola"
-          },
+          {},
             {
               position: "right",
             }

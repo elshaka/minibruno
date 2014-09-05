@@ -27,7 +27,7 @@
       <div class="panel panel-info">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#variable">Variable en el tiempo</a>
+            <a data-toggle="collapse" data-parent="#accordion" href="#variable">Lazo de control</a>
           </h4>
         </div>
         <div id="variable" class="panel-collapse collapse">
@@ -72,24 +72,28 @@
       <div class="panel panel-info">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#discharges_and_temperatures">Descargas, temperatura final y temperatura vapor</a>
+            <a data-toggle="collapse" data-parent="#accordion" href="#discharges_and_temperatures">Descargas, temperatura final, temperatura vapor y total descargado por turno</a>
           </h4>
         </div>
         <div id="discharges_and_temperatures" class="panel-collapse collapse">
           <div class="panel-body">
             <%= form_for :report, url: discharges_and_temperatures_report_path(format: 'pdf'), html: {role: 'form'} do |f| %>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <%= f.label :start_time, 'Desde' %>
-                  <%= f.text_field :start_time, class: 'form-control inline datetimepicker-b3' %>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <%= f.label :end_time, 'Hasta' %>
-                  <%= f.text_field :end_time, class: 'form-control inline datetimepicker-b3' %>
-                </div>
-              </div>
+              <%= render 'datetime_fields', f: f %>
+              <%= f.submit 'Generar reporte', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#pumped_fat">Bombeo de grasa, acumulado y total bombeado por turno</a>
+          </h4>
+        </div>
+        <div id="pumped_fat" class="panel-collapse collapse">
+          <div class="panel-body">
+            <%= form_for :report, url: pumped_fat_report_path(format: 'pdf'), html: {role: 'form'} do |f| %>
+              <%= render 'datetime_fields', f: f %>
               <%= f.submit 'Generar reporte', class: 'btn btn-primary' %>
             <% end %>
           </div>

@@ -21,13 +21,20 @@
         xaxis: {
           mode: "time",
           timezone: "browser",
-          timeformat: "%I:%M %p"
+          timeformat: "%I:%M %p",
+          min: <%= data[:start_time].to_time.to_i * 1000 %>,
+          max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
         colors: ["#00f", "#ff0", "#ff8000", "#f00"],
         legend: {
           show: true,
           labelBoxBorderColor: "none",
           position: "se"
+        },
+        yaxis: {
+          max: 350,
+          min: 150,
+          tickSize: 10
         }
       }
     );
