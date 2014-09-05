@@ -1,0 +1,59 @@
+<script type="text/javascript">
+  $(function() {
+    var discharges = [];
+    var final_temps = [];
+    var vapor_temps = [];
+    <% data[:discharges][:values].each_with_index do |value, index| %>
+      <% if data[:discharges][:timestamps][index] - data[:discharges][:timestamps][index - 1] > 300000 %>
+        discharges.push(null);
+      <% end %>
+      discharges.push([<%= data[:discharges][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    <% data[:final_temps][:values].each_with_index do |value, index| %>
+      <% if data[:final_temps][:timestamps][index] - data[:final_temps][:timestamps][index - 1] > 300000 %>
+        final_temps.push(null);
+      <% end %>
+      final_temps.push([<%= data[:final_temps][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    <% data[:vapor_temps][:values].each_with_index do |value, index| %>
+      <% if data[:vapor_temps][:timestamps][index] - data[:vapor_temps][:timestamps][index - 1] > 300000 %>
+        vapor_temps.push(null);
+      <% end %>
+      vapor_temps.push([<%= data[:vapor_temps][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    $.plot(
+      "#plot",
+      [
+        {label: "Descargas", yaxis: 1, data: discharges, color: "#0f0",
+          bars: {
+            show: true,
+            barWidth: 60000
+          }
+        },
+        {label: "Temperatura final", yaxis: 2, data: final_temps, color: "#ff8000"},
+        {label: "Temperatura vapor", yaxis: 2, data: vapor_temps, color: "#f00"}
+      ],
+      {
+        xaxis: {
+          mode: "time",
+          timezone: "browser",
+          timeformat: "%I:%M %p"
+        },
+        yaxes: [
+          {
+            label: "hola"
+          },
+            {
+              position: "right",
+            }
+        ],
+        legend: {
+          show: true,
+          labelBoxBorderColor: "none",
+          position: "se"
+        }
+      }
+    );
+  });
+</script>
+<div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>

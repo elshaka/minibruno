@@ -1,0 +1,2 @@
+module MotorStatsHelper
+end

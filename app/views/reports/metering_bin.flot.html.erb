@@ -1,0 +1,43 @@
+<script type="text/javascript">
+  $(function() {
+    var levels = [];
+    var discharges = [];
+    <% data[:levels][:values].each_with_index do |value, index| %>
+      <% if data[:levels][:timestamps][index] - data[:levels][:timestamps][index - 1] > 300000 %>
+        levels.push(null);
+      <% end %>
+      levels.push([<%= data[:levels][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    <% data[:discharges][:values].each_with_index do |value, index| %>
+      <% if data[:discharges][:timestamps][index] - data[:discharges][:timestamps][index - 1] > 300000 %>
+        discharges.push(null);
+      <% end %>
+      discharges.push([<%= data[:discharges][:timestamps][index] %>, <%= value %>]);
+    <% end %>
+    $.plot(
+      "#plot",
+      [
+        {label: "Descargas", data: discharges, color: "#0f0",
+          bars: {
+            show: true,
+            barWidth: 60000
+          }
+        },
+        {label: "Nivel", data: levels, color: "#00f"}
+      ],
+      {
+        xaxis: {
+          mode: "time",
+          timezone: "browser",
+          timeformat: "%I:%M %p"
+        },
+        legend: {
+          show: true,
+          labelBoxBorderColor: "none",
+          position: "se"
+        }
+      }
+    );
+  });
+</script>
+<div id="plot" style="width:<%= width %>; height:<%= height %>px;"></div>

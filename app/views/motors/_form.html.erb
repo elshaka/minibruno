@@ -1,0 +1,15 @@
+<%= form_for(@motor, html: {role: 'form'}) do |f| %>
+  <%= render partial: 'layouts/resource_errors', locals: {resource: @motor} %>
+  <div class="form-group">
+    <%= f.label :name, 'Nombre', class: 'control-label' %><br>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, 'Descripción', class: 'control-label' %><br>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= link_to 'Regresar', motors_path, class: 'btn btn-default' %>
+    <%= f.submit 'Guardar', class: 'btn btn-success' %>
+  </div>
+<% end %>

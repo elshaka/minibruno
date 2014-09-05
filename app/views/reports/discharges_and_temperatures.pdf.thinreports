@@ -1,0 +1,9 @@
+report.set_layout tlf: 'reports/thinreports_layouts/discharges_and_temperatures'
+report.start_new_page do |page|
+  page.item(:plot) do |plot|
+    plot.value(render_flot('discharges_and_temperatures', @data, 1000, 666))
+  end
+  page.item(:title).value(@data[:title])
+  page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
+  page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
+end

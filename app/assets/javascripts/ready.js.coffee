@@ -39,5 +39,5 @@ ready = ->
   time_range_checkboxes.trigger 'change'
   return
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
+$(document).ready ready
+$(document).on 'page:load', ready

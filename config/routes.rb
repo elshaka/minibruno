@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :motors
+
   root 'dashboard#index'
 
   devise_for :users
@@ -15,8 +17,11 @@ Rails.application.routes.draw do
   post 'alarms', to: 'alarms#create'
   post 'stops', to: 'stops#start'
   put 'stops', to: 'stops#end'
+  post 'motor_stats', to: 'motor_stats#create_multiple'
 
   get 'reports', to: 'reports#index'
   post 'reports/temperatures', to: 'reports#temperatures', as: 'temperatures_report'
   post 'reports/variable', to: 'reports#variable', as: 'variable_report'
+  post 'reports/metering_bin', to: 'reports#metering_bin', as: 'metering_bin_report'
+  post 'reports/discharges_and_temperatures', to: 'reports#discharges_and_temperatures', as: 'discharges_and_temperatures_report'
 end
