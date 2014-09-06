@@ -21,9 +21,11 @@ report.start_new_page do |page|
   page.item(:title).value(@data[:title])
   page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
   page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
-  @data[:turn_discharges].each do |turn_discharge|
-    report.list(:table)
-      .add_row turn_name: turn_discharge[:name],
-               total_turn: "#{turn_discharge[:total].round()} Kg"
+
+  report.list(:table) do |table|
+    @data[:turn_discharges].each do |turn_discharge|
+      table.add_row turn_name: turn_discharge[:name],
+                    total_turn: "#{turn_discharge[:total].round()} Kg"
+    end
   end
 end

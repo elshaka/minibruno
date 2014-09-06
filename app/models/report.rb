@@ -29,9 +29,9 @@ class Report
   end
 
   def self.variable(params)
+    stat_type = StatType.find(params[:stat_type_id])
     time_range, data = init(params, stat_type.description)
     return nil if time_range.nil?
-    stat_type = StatType.find(params[:stat_type_id])
     stats = Stat.where(stat_type_id: params[:stat_type_id])
     stats = stats.where(created_at: time_range)
     return nil if stats.empty?
@@ -153,7 +153,6 @@ class Report
   def self.alarms(params)
     time_range, data = init(params, 'Diagrama de alarmas')
     return nil if time_range.nil?
-
     alarms = Alarm.where(created_at: time_range)
     alarms_count = alarms.count
     return nil if alarms_count == 0
@@ -165,7 +164,6 @@ class Report
     alarm_type_ids = alarms_count_by_type.map do |item|
       item[0]
     end
-
     alarm_types = AlarmType.where(id: alarm_type_ids)
       .pluck(:id, :code, :description)
       .reduce({}) do |hash, alarm_type|
@@ -175,7 +173,6 @@ class Report
         }
         hash
     end
-
     cumulative = 0
     alarms = alarms_count_by_type.map do |alarm_count|
       {
@@ -192,7 +189,27 @@ class Report
 
   def self.motors(params)
     time_range, data = init(params, 'Motores')
-    nil
+    return nil if time_range.nil?
+
+    motors = Motor.pluck(:id, :name)
+      .reduce({}) do |motors, motor|
+        motors[motor[0]] = motor[1]
+        motors
+    end
+    motors_stats = motors.map do |motor_id, motor_name|
+      motor_stats = MotorStat.where(motor_id: motor_id, created_at: time_range)
+        .pluck(:state, :created_at)
+        .reduce(Hash.new { |hash, key| hash[key] = [] }) do |motor_stats, motor_stat|
+          motor_stats[:states] << motor_stat[0]
+          motor_stats[:timestamps] << motor_stat[1].to_time.to_i * 1000
+          motor_stats
+      end
+      {motor_name: motor_name, motor_stats: motor_stats}
+    end
+    return nil if motors_stats.empty?
+
+    data[:motors_stats] = motors_stats
+    data
   end
 
   private

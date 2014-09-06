@@ -1,8 +1,8 @@
 module ReportsHelper
   @@ac = ApplicationController.new
 
-  def render_flot(view, data, width, height)
-    jpg_path = "tmp/#{view}-#{current_user.id}.jpg"
+  def render_flot(view, data, width, height, options = {})
+    jpg_path = "tmp/#{view}-#{current_user.id}-#{options[:suffix]}.jpg"
     html_path = "tmp/#{view}-#{current_user.id}.html"
     File.open(html_path, 'w') do |file|
       file << @@ac.render_to_string(

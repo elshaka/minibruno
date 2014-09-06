@@ -1,0 +1,21 @@
+report.set_layout tlf: 'reports/thinreports_layouts/motors'
+report.start_new_page do |page|
+
+  report.list(:table) do |table|
+    @data[:motors_stats].each_with_index do |motor_stats, index|
+      motor_stats.merge!({
+        start_time: @data[:start_time],
+        end_time: @data[:end_time]
+      })
+      table.add_row do |row|
+        row.item(:plot) do |plot|
+          plot.value(render_flot('motors', motor_stats, 1000, 133, suffix: index))
+        end
+        row.item(:motor_name).value(motor_stats[:motor_name])
+      end
+    end
+  end
+  page.item(:title).value(@data[:title])
+  page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
+  page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
+end

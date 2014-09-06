@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905210020) do
+ActiveRecord::Schema.define(version: 20140906193841) do
 
   create_table "alarm_types", force: true do |t|
     t.string   "description"
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 20140905210020) do
     t.datetime "updated_at"
   end
 
+  add_index "alarms", ["alarm_type_id"], name: "index_alarms_on_alarm_type_id", using: :btree
+  add_index "alarms", ["created_at"], name: "index_alarms_on_created_at", using: :btree
+
   create_table "base_units", force: true do |t|
     t.string   "unit"
     t.string   "description"
@@ -40,6 +43,9 @@ ActiveRecord::Schema.define(version: 20140905210020) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "motor_stats", ["created_at"], name: "index_motor_stats_on_created_at", using: :btree
+  add_index "motor_stats", ["motor_id"], name: "index_motor_stats_on_motor_id", using: :btree
 
   create_table "motors", force: true do |t|
     t.string   "name"

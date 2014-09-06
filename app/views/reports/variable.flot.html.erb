@@ -23,9 +23,27 @@
       "#plot",
       [
         {label: "Valor", data: values, yaxis: 1, color: "#00f"},
-        {label: "Set point", data: set_points, yaxis: 1, color: "#0f0"},
+        {
+          label: "Set point",
+          data: set_points,
+          yaxis: 1,
+          color: "#0f0",
+          lines: {
+            show: true,
+            steps: true
+          }
+        },
         <% if data[:controllable] %>
-          {label: "Auto/Manual", data: autos, yaxis: 2, color: "f00"}
+          {
+            label: "Auto/Manual",
+            data: autos,
+            yaxis: 2,
+            color: "f00",
+            lines: {
+              show: true,
+              steps: true
+            }
+          }
         <% end %>
       ],
       {

@@ -14,9 +14,11 @@ report.start_new_page do |page|
   page.item(:title).value(@data[:title])
   page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
   page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
-  @data[:alarm_types].each do |id, alarm_type|
-    report.list(:table)
-      .add_row alarm_code: alarm_type[:code],
-               description: alarm_type[:description]
+
+  report.list(:table) do |table|
+    @data[:alarm_types].each do |id, alarm_type|
+      table.add_row alarm_code: alarm_type[:code],
+                    description: alarm_type[:description]
+    end
   end
 end
