@@ -45,6 +45,7 @@ class Report
         stats
     end
 
+    data[:unit] = stat_type.base_unit
     data[:controllable] = stat_type.controllable
     data[:start_time] = time_range.begin
     data[:end_time] = time_range.end

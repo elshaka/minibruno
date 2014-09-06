@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   def index
-    @stat_types = StatType.order(:base_unit_id)
+    @stat_types = StatType.controllable.order(:base_unit_id)
   end
 
   def temperatures

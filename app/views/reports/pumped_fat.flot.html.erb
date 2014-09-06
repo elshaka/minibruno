@@ -17,10 +17,17 @@
         {label: "Grasa bombeada", yaxis: 1, data: pumped_fat, color: "#0f0",
           bars: {
             show: true,
-            barWidth: 120000
+            barWidth: 1000000
           }
         },
-        {label: "Acumulado", yaxis: 1, data: accumulateds, color: "#0ff"}
+        {
+          label: "Acumulado",
+          yaxis: 2,
+          data: accumulateds,
+          color: "#0ff",
+          points: { show: true },
+          lines: { show: true }
+        }
       ],
       {
         xaxis: {
@@ -31,10 +38,13 @@
           max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
         yaxes: [
-          {},
-            {
-              position: "right",
-            }
+          {
+            axisLabel: "Descargas (Kg)"
+          },
+          {
+            position: "right",
+            axisLabel: "Acumulado (Kg)"
+          }
         ],
         legend: {
           show: true,

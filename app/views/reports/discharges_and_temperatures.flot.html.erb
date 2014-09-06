@@ -24,14 +24,14 @@
     $.plot(
       "#plot",
       [
-        {label: "Descargas", yaxis: 1, data: discharges, color: "#0f0",
+        {label: "Temperatura final", yaxis: 1, data: final_temps, color: "#ff8000"},
+        {label: "Temperatura vapor", yaxis: 1, data: vapor_temps, color: "#f00"},
+        {label: "Descargas", yaxis: 2, data: discharges, color: "#0f0",
           bars: {
             show: true,
             barWidth: 60000
           }
-        },
-        {label: "Temperatura final", yaxis: 2, data: final_temps, color: "#ff8000"},
-        {label: "Temperatura vapor", yaxis: 2, data: vapor_temps, color: "#f00"}
+        }
       ],
       {
         xaxis: {
@@ -42,10 +42,13 @@
           max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
         yaxes: [
-          {},
-            {
-              position: "right",
-            }
+          {
+            axisLabel: "Temperatura (°F)"
+          },
+          {
+            position: "right",
+            axisLabel: "Descargas (Kg)"
+          }
         ],
         legend: {
           show: true,

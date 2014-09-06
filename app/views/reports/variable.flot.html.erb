@@ -31,7 +31,7 @@
           lines: {
             show: true,
             steps: true
-          }
+          },
         },
         <% if data[:controllable] %>
           {
@@ -55,7 +55,9 @@
           max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
         yaxes: [
-          {},
+          {
+            axisLabel: "<%= data[:unit].to_collection_select %>",
+          },
             {
               max: 4,
               min: -1,

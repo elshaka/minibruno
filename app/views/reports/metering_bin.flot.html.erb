@@ -33,6 +33,9 @@
           min: <%= data[:start_time].to_time.to_i * 1000 %>,
           max: <%= data[:end_time].to_time.to_i * 1000 %>
         },
+        yaxis: {
+          axisLabel: "Masa (Kg)"
+        },
         legend: {
           show: true,
           labelBoxBorderColor: "none",
