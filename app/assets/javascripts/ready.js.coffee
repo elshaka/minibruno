@@ -6,29 +6,22 @@ ready = ->
   # Selectizable
   $('.selectizable').selectize()
   # DateTimePicker
-  datepickers = $('.datepicker-b3')
-  datepickers.datetimepicker({
-    format: 'YYYY-MM-DD',
-    pickTime: false,
-    language: 'es'
-  })
-  datepickers.each ->
-    $(this).data('DateTimePicker').setDate new Date
+  $('input.datepicker-b3').focus ->
+    $(this).datetimepicker {
+      format: 'YYYY-MM-DD',
+      pickTime: false,
+      language: 'es'
+    }
     return
-  timepickers = $('.timepicker-b3')
-  timepickers.datetimepicker({
-    format: 'hh:mm A',
-    pick12HourFormat: true,
-    pickDate: false,
-    language: 'es',
-  })
-  datetimepickers = $('.datetimepicker-b3')
-  datetimepickers.datetimepicker({
-    format: 'YYYY-MM-DD hh:mm A',
-    pick12HourFormat: true,
-    sideBySide: true,
-    language: 'es',
-  })
+  $('input.datetimepicker-b3').focus ->
+    $(this).datetimepicker {
+      format: 'YYYY-MM-DD hh:mm A',
+      pick12HourFormat: true,
+      sideBySide: true,
+      language: 'es',
+    }
+    return
+  # Time range checkboxes
   time_range_checkboxes = $('.time_range_checkbox')
   time_range_checkboxes.on 'change', ->
     checkbox = $(this)
