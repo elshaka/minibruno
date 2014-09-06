@@ -50,4 +50,12 @@ class ReportsController < ApplicationController
       redirect_to reports_path
     end
   end
+
+  def motors
+    @data = Report.motors(params[:report])
+    if @data.nil?
+      flash[:alert] = 'No hay registros para generar el reporte'
+      redirect_to reports_path
+    end
+  end
 end

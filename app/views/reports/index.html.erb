@@ -15,7 +15,7 @@
             <a data-toggle="collapse" data-parent="#accordion" href="#temperatures">Temperaturas</a>
           </h4>
         </div>
-        <div id="temperatures" class="panel-collapse collapse in">
+        <div id="temperatures" class="panel-collapse collapse">
           <div class="panel-body">
             <%= form_for :report, url: temperatures_report_path(format: 'pdf'), html: {role: 'form'} do |f| %>
               <%= render 'datetime_fields', f: f %>
@@ -108,6 +108,21 @@
         <div id="alarms" class="panel-collapse collapse">
           <div class="panel-body">
             <%= form_for :report, url: alarms_report_path(format: 'pdf'), html: {role: 'form'} do |f| %>
+              <%= render 'datetime_fields', f: f %>
+              <%= f.submit 'Generar reporte', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#motors">Motores</a>
+          </h4>
+        </div>
+        <div id="motors" class="panel-collapse collapse">
+          <div class="panel-body">
+            <%= form_for :report, url: motors_report_path(format: 'pdf'), html: {role: 'form'} do |f| %>
               <%= render 'datetime_fields', f: f %>
               <%= f.submit 'Generar reporte', class: 'btn btn-primary' %>
             <% end %>

@@ -1,9 +1,9 @@
 class Report
   def self.temperatures(params)
+    time_range, data = init(params, 'Temperaturas')
+    return nil if time_range.nil?
     temperature_types = StatType.where(base_unit_id: 1)
     return nil if temperature_types.empty?
-    time_range = generate_time_range(params)
-    return nil if time_range.nil?
 
     temperatures = []
     temperature_types.each do |temperature_type|
@@ -24,16 +24,12 @@ class Report
     end
     return nil if temperatures.empty?
 
-    data = {}
-    data[:title] = "Temperaturas"
-    data[:start_time] = time_range.begin
-    data[:end_time] = time_range.end
     data[:temperatures] = temperatures
     data
   end
 
   def self.variable(params)
-    time_range = generate_time_range(params)
+    time_range, data = init(params, stat_type.description)
     return nil if time_range.nil?
     stat_type = StatType.find(params[:stat_type_id])
     stats = Stat.where(stat_type_id: params[:stat_type_id])
@@ -49,8 +45,6 @@ class Report
         stats
     end
 
-    data = {}
-    data[:title] = stat_type.description
     data[:controllable] = stat_type.controllable
     data[:start_time] = time_range.begin
     data[:end_time] = time_range.end
@@ -59,8 +53,7 @@ class Report
   end
 
   def self.metering_bin(params)
-    return nil if params[:start_time].blank? or params[:end_time].blank?
-    time_range = generate_time_range(params)
+    time_range, data = init(params, 'Nivel del metering bin')
     return nil if time_range.nil?
     levels = Stat.where(stat_type_id: 9).where(created_at: time_range)
     discharges = Stat.where(stat_type_id: 8).where(created_at: time_range)
@@ -79,17 +72,13 @@ class Report
         discharges
     end
 
-    data = {}
-    data[:title] = 'Descargas Metering Bin'
-    data[:start_time] = time_range.begin
-    data[:end_time] =  time_range.end
     data[:levels] = levels
     data[:discharges] = discharges
     data
   end
 
   def self.discharges_and_temperatures(params)
-    time_range = generate_time_range(params)
+    time_range, data = init(params, 'Descargas, temperatura final y temperatura vapor')
     return nil if time_range.nil?
     discharges = Stat.where(stat_type_id: 8).where(created_at: time_range)
     final_temps = Stat.where(stat_type_id: 6).where(created_at: time_range)
@@ -98,33 +87,25 @@ class Report
 
     total_discharges = 0
     turn_discharges = Turn.all.map do |turn|
-      if turn.start_time < turn.end_time
-        time_condition = 'TIME(created_at) BETWEEN TIME(?) AND TIME(?)'
-      else
-        time_condition = 'TIME(created_at) BETWEEN TIME(?) AND "00:00:00" OR TIME(created_at) BETWEEN "00:00:00" AND TIME(?)'
-      end
-      turn_discharges = discharges.where([time_condition, turn.start_time, turn.end_time]).sum(:value)
+      turn_discharges = discharges.where([turn_time_condition(turn), turn.start_time, turn.end_time]).sum(:value)
       total_discharges += turn_discharges
       {
         name: turn.name,
         total: turn_discharges
       }
     end
-
     discharges = discharges.pluck(:value, :created_at)
       .reduce(Hash.new { |hash, key| hash[key] = [] }) do |discharges, discharge|
         discharges[:values] << discharge[0]
         discharges[:timestamps] << discharge[1].to_time.to_i * 1000
         discharges
     end
-
     final_temps = final_temps.pluck(:value, :created_at)
       .reduce(Hash.new { |hash, key| hash[key] = [] }) do |final_temps, final_temp|
         final_temps[:values] << final_temp[0]
         final_temps[:timestamps] << final_temp[1].to_time.to_i * 1000
         final_temps
     end
-
     vapor_temps = vapor_temps.pluck(:value, :created_at)
       .reduce(Hash.new { |hash, key| hash[key] = [] }) do |vapor_temps, vapor_temp|
         vapor_temps[:values] << vapor_temp[0]
@@ -132,10 +113,6 @@ class Report
         vapor_temps
     end
 
-    data = {}
-    data[:title] = 'Descargas, temperatura final y temperatura vapor'
-    data[:start_time] = time_range.begin
-    data[:end_time] =  time_range.end
     data[:discharges] = discharges
     data[:final_temps] = final_temps
     data[:vapor_temps] = vapor_temps
@@ -145,19 +122,14 @@ class Report
   end
 
   def self.pumped_fat(params)
-    time_range = generate_time_range(params)
+    time_range, data = init(params, 'Descargas, temperatura final y temperatura vapor')
     return nil if time_range.nil?
     pumped_fat = Stat.where(stat_type_id: 10).where(created_at: time_range)
     return nil if pumped_fat.empty?
 
     total_pumped_fat = 0
     turn_pumped_fat = Turn.all.map do |turn|
-      if turn.start_time < turn.end_time
-        time_condition = 'TIME(created_at) BETWEEN TIME(?) AND TIME(?)'
-      else
-        time_condition = 'TIME(created_at) BETWEEN TIME(?) AND "00:00:00" OR TIME(created_at) BETWEEN "00:00:00" AND TIME(?)'
-      end
-      turn_pumped_fat = pumped_fat.where([time_condition, turn.start_time, turn.end_time]).sum(:value)
+      turn_pumped_fat = pumped_fat.where([turn_time_condition(turn), turn.start_time, turn.end_time]).sum(:value)
       total_pumped_fat += turn_pumped_fat
       {
         name: turn.name,
@@ -172,10 +144,6 @@ class Report
         pumped_fat
     end
 
-    data = {}
-    data[:title] = 'Descargas, temperatura final y temperatura vapor'
-    data[:start_time] = time_range.begin
-    data[:end_time] =  time_range.end
     data[:pumped_fat] = pumped_fat
     data[:turn_pumped_fat] = turn_pumped_fat
     data[:total_pumped_fat] = total_pumped_fat
@@ -183,7 +151,7 @@ class Report
   end
 
   def self.alarms(params)
-    time_range = generate_time_range(params)
+    time_range, data = init(params, 'Diagrama de alarmas')
     return nil if time_range.nil?
 
     alarms = Alarm.where(created_at: time_range)
@@ -217,18 +185,31 @@ class Report
       }
     end
 
-    data = {}
     data[:alarms] = alarms
     data[:alarm_types] = alarm_types
-    data[:title] = 'Diagrama de alarmas'
-    data[:start_time] = time_range.begin
-    data[:end_time] =  time_range.end
     data
+  end
+
+  def self.motors(params)
+    time_range, data = init(params, 'Motores')
+    nil
   end
 
   private
 
-  def self.generate_time_range(params)
+  def self.init(params, title)
+    time_range = get_time_range(params)
+    return nil if time_range.nil?
+
+    data = {}
+    data[:title] = title
+    data[:start_time] = time_range.begin
+    data[:end_time] =  time_range.end
+
+    [time_range, data]
+  end
+
+  def self.get_time_range(params)
     begin
       if params[:with_time_range] == '0'
         datetime = Time.parse(params[:date])
@@ -238,6 +219,14 @@ class Report
       end
     rescue
       nil
+    end
+  end
+
+  def self.turn_time_condition(turn)
+    if turn.start_time < turn.end_time
+      time_condition = 'TIME(created_at) BETWEEN TIME(?) AND TIME(?)'
+    else
+      time_condition = 'TIME(created_at) BETWEEN TIME(?) AND "23:59:59" OR TIME(created_at) BETWEEN "00:00:00" AND TIME(?)'
     end
   end
 end
