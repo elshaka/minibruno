@@ -42,4 +42,13 @@ class ReportsController < ApplicationController
       redirect_to reports_path
     end
   end
+
+  def alarms
+    @data = Report.alarms(params[:report])
+    if @data.nil?
+      flash[:alert] = 'No hay registros para generar el reporte'
+      redirect_to reports_path
+    end
+    logger.debug @data[:alarms]
+  end
 end

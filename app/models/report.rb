@@ -182,7 +182,44 @@ class Report
     data
   end
 
-  def alarms(params)
+  def self.alarms(params)
+    time_range = generate_time_range(params)
+    return nil if time_range.nil?
+
+    alarms = Alarm.where(created_at: time_range)
+    alarms_count = alarms.count
+    return nil if alarms_count == 0
+    alarms_count_by_type = alarms.group(:alarm_type_id)
+      .count
+      .sort_by { |alarm_type_id, count| count }
+      .reverse
+
+    alarm_types = AlarmType.all
+      .pluck(:id, :code, :description)
+      .reduce({}) do |hash, alarm_type|
+        hash[alarm_type[0]] = {
+          code: alarm_type[1],
+          description: alarm_type[2]
+        }
+        hash
+    end
+
+    cumulative = 0
+    alarms = alarms_count_by_type.map do |alarm_count|
+      {
+        code: alarm_types[alarm_count[0]][:code],
+        description: alarm_types[alarm_count[0]][:description],
+        frequency: alarm_count[1],
+        cumulative_percentage: cumulative += alarm_count[1] / alarms_count * 100
+      }
+    end
+
+    data = {}
+    data[:alarms] = alarms
+    data[:title] = 'Diagrama de alarmas'
+    data[:start_time] = time_range.begin
+    data[:end_time] =  time_range.end
+    data
   end
 
   private
