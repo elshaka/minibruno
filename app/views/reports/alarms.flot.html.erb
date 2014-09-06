@@ -1,5 +1,8 @@
 <script type="text/javascript">
   $(function() {
+    function percentageFormatter(val, axis){
+      return val + " %"
+    }
     var frequencies = [];
     var cumulative_percentages = [];
     <% data[:alarms].each do |alarm| %>
@@ -34,13 +37,15 @@
         },
         yaxes: [
           {
-            tickSize: 1,
+            position: "left",
+            axisLabel: "Frecuencia de alarma",
           },
           {
-            max: 110,
             min: 0,
-            ticks: 10,
+            max: 100,
             position: "right",
+            tickFormatter: percentageFormatter,
+            axisLabel: "Porcentaje acumulativo "
           }
         ]
       }

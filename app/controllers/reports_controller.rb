@@ -49,6 +49,5 @@ class ReportsController < ApplicationController
       flash[:alert] = 'No hay registros para generar el reporte'
       redirect_to reports_path
     end
-    logger.debug @data[:alarms]
   end
 end

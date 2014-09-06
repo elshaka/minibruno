@@ -194,7 +194,11 @@ class Report
       .sort_by { |alarm_type_id, count| count }
       .reverse
 
-    alarm_types = AlarmType.all
+    alarm_type_ids = alarms_count_by_type.map do |item|
+      item[0]
+    end
+
+    alarm_types = AlarmType.where(id: alarm_type_ids)
       .pluck(:id, :code, :description)
       .reduce({}) do |hash, alarm_type|
         hash[alarm_type[0]] = {
@@ -208,7 +212,6 @@ class Report
     alarms = alarms_count_by_type.map do |alarm_count|
       {
         code: alarm_types[alarm_count[0]][:code],
-        description: alarm_types[alarm_count[0]][:description],
         frequency: alarm_count[1],
         cumulative_percentage: cumulative += alarm_count[1] / alarms_count * 100
       }
@@ -216,6 +219,7 @@ class Report
 
     data = {}
     data[:alarms] = alarms
+    data[:alarm_types] = alarm_types
     data[:title] = 'Diagrama de alarmas'
     data[:start_time] = time_range.begin
     data[:end_time] =  time_range.end
