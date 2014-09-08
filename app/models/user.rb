@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   ROLES = {
     1 => 'Supervisor',
-    2 => 'Operador'
+    2 => 'Operador',
+    3 => 'Administrador'
   }
 
   scope :registered, -> { where.not id: 1 }
@@ -30,6 +31,14 @@ class User < ActiveRecord::Base
 
   def admin?
     id == 1
+  end
+
+  def supervisor?
+    admin? or role_id == 1
+  end
+
+  def operator?
+    role_id == 2
   end
 
   def remember_me

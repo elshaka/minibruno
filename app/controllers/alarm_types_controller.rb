@@ -1,23 +1,18 @@
 class AlarmTypesController < ApplicationController
   before_action :set_alarm_type, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin
 
-  # GET /alarm_types
-  # GET /alarm_types.json
   def index
     @alarm_types = AlarmType.all
   end
 
-  # GET /alarm_types/new
   def new
     @alarm_type = AlarmType.new
   end
 
-  # GET /alarm_types/1/edit
   def edit
   end
 
-  # POST /alarm_types
-  # POST /alarm_types.json
   def create
     @alarm_type = AlarmType.new(alarm_type_params)
 
@@ -32,8 +27,6 @@ class AlarmTypesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /alarm_types/1
-  # PATCH/PUT /alarm_types/1.json
   def update
     respond_to do |format|
       if @alarm_type.update(alarm_type_params)
@@ -46,8 +39,6 @@ class AlarmTypesController < ApplicationController
     end
   end
 
-  # DELETE /alarm_types/1
-  # DELETE /alarm_types/1.json
   def destroy
     respond_to do |format|
       if @alarm_type.destroy
@@ -61,12 +52,10 @@ class AlarmTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_alarm_type
       @alarm_type = AlarmType.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def alarm_type_params
       params.require(:alarm_type).permit(:description, :code)
     end

@@ -1,13 +1,17 @@
 <%= navbar_menu_item('Inicio', 'dashboard', root_path) %>
 <%= navbar_menu_item('Reportes', 'bar-chart-o', reports_path) %>
-<%= navbar_menu_item('Usuarios', 'users', users_path) %>
-<%= navbar_menu_item('Turnos', 'clock-o', turns_path) %>
-<li class="<%= %w(base_units stat_types alarm_types motors).include?(controller_name) ? 'active' : '' %>">
-  <a href="#"><i class="fa fa-gears fa-fw"></i> Opciones avanzadas<span class="fa arrow"></span></a>
-  <ul class="nav nav-second-level">
-    <%= navbar_menu_item('Unidades base', 'flask', base_units_path) %>
-    <%= navbar_menu_item('Variables', 'edit', stat_types_path) %>
-    <%= navbar_menu_item('Tipos de alarmas', 'bell', alarm_types_path) %>
-    <%= navbar_menu_item('Motores', 'gear', motors_path) %>
-  </ul>
-</li>
+<% if current_user.supervisor? %>
+  <%= navbar_menu_item('Usuarios', 'users', users_path) %>
+  <%= navbar_menu_item('Turnos', 'clock-o', turns_path) %>
+<% end %>
+<% if current_user.admin? %>
+  <li class="<%= %w(base_units stat_types alarm_types motors).include?(controller_name) ? 'active' : '' %>">
+    <a href="#"><i class="fa fa-gears fa-fw"></i> Opciones avanzadas<span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+      <%= navbar_menu_item('Unidades base', 'flask', base_units_path) %>
+      <%= navbar_menu_item('Variables', 'edit', stat_types_path) %>
+      <%= navbar_menu_item('Tipos de alarmas', 'bell', alarm_types_path) %>
+      <%= navbar_menu_item('Motores', 'gear', motors_path) %>
+    </ul>
+  </li>
+<% end %>

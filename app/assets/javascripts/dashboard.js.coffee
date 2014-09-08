@@ -7,7 +7,7 @@ window.update_stats = (data) ->
     if temp?
       $(div_id).html("#{temp.value} °F")
       if temp.set_point?
-        $(control_div_id).html("Setpoint: #{temp.set_point} °F <span class='label label-#{if temp.auto then 'success' else 'danger'} auto-label'>#{if temp.auto then 'Auto' else 'Manual'}</span>")
+        $(control_div_id).html("Setpoint #{temp.set_point} °F <span class='label label-#{if temp.auto then 'success' else 'danger'} auto-label'>#{if temp.auto then 'Auto' else 'Manual'}</span>")
     else
       $(div_id).html("-- °F")
       $(control_div_id).html("--")

@@ -5,6 +5,7 @@ class UsersController < Devise::RegistrationsController
   before_action :set_roles, except: [:destroy]
   before_action :raise_if_admin, only: [:edit, :update, :settings, :update_settings]
   before_action :redirect_to_sign_in, except: [:sign_in]
+  before_action :authorize_supervisor
 
   def index
     @users = User.registered.all

@@ -1,29 +1,22 @@
 class StatTypesController < ApplicationController
   before_action :set_stat_type, only: [:show, :edit, :update, :destroy]
   before_action :set_base_units, only: [:new, :edit]
+  before_action :authorize_admin
 
-  # GET /stat_types
-  # GET /stat_types.json
   def index
     @stat_types = StatType.includes(:base_unit)
   end
 
-  # GET /stat_types/1
-  # GET /stat_types/1.json
   def show
   end
 
-  # GET /stat_types/new
   def new
     @stat_type = StatType.new
   end
 
-  # GET /stat_types/1/edit
   def edit
   end
 
-  # POST /stat_types
-  # POST /stat_types.json
   def create
     @stat_type = StatType.new(stat_type_params)
 
@@ -38,8 +31,6 @@ class StatTypesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /stat_types/1
-  # PATCH/PUT /stat_types/1.json
   def update
     respond_to do |format|
       if @stat_type.update(stat_type_params)
@@ -52,8 +43,6 @@ class StatTypesController < ApplicationController
     end
   end
 
-  # DELETE /stat_types/1
-  # DELETE /stat_types/1.json
   def destroy
     respond_to do |format|
       if @stat_type.destroy
@@ -67,7 +56,6 @@ class StatTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_stat_type
       @stat_type = StatType.find(params[:id])
     end
@@ -76,7 +64,6 @@ class StatTypesController < ApplicationController
       @base_units = BaseUnit.all
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def stat_type_params
       params.require(:stat_type).permit(:base_unit_id, :description, :controllable)
     end

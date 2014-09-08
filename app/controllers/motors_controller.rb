@@ -1,5 +1,6 @@
 class MotorsController < ApplicationController
   before_action :set_motor, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin
 
   def index
     @motors = Motor.all

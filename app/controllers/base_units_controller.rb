@@ -1,5 +1,6 @@
 class BaseUnitsController < ApplicationController
   before_action :set_base_unit, only: [:edit, :update, :destroy]
+  before_action :authorize_admin
 
   def index
     @base_units = BaseUnit.all
