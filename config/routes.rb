@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   post 'reports/pumped_fat', to: 'reports#pumped_fat', as: 'pumped_fat_report'
   post 'reports/alarms', to: 'reports#alarms', as: 'alarms_report'
   post 'reports/motors', to: 'reports#motors', as: 'motors_report'
+  post 'reports/averages', to: 'reports#averages', as: 'averages_report'
 end

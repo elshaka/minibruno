@@ -123,7 +123,7 @@ class Report
   end
 
   def self.pumped_fat(params)
-    time_range, data = init(params, 'Descargas, temperatura final y temperatura vapor')
+    time_range, data = init(params, 'Bombeo de grasa, acumulado y total bombeado por turno')
     return nil if time_range.nil?
     pumped_fat = Stat.where(stat_type_id: 10).where(created_at: time_range)
     return nil if pumped_fat.empty?
@@ -191,6 +191,7 @@ class Report
   def self.motors(params)
     time_range, data = init(params, 'Motores')
     return nil if time_range.nil?
+    return nil if MotorStat.where(created_at: time_range).empty?
 
     motors = Motor.pluck(:id, :name)
       .reduce({}) do |motors, motor|
@@ -207,9 +208,38 @@ class Report
       end
       {motor_name: motor_name, motor_stats: motor_stats}
     end
-    return nil if motors_stats.empty?
 
     data[:motors_stats] = motors_stats
+    data
+  end
+
+  def self.averages(params)
+    time_range, data = init(params, 'Temperatura final, nivel de grasa, nivel de carga y presión interna')
+    return nil if time_range.nil?
+
+    final_temps = []
+    fat_levels = []
+    currents = []
+    pressures = []
+    24.times do |hour|
+      final_temps << Stat.where(stat_type_id: 6)
+        .where(created_at: get_hourly_range(time_range.begin, hour))
+        .average(:value)
+      fat_levels << Stat.where(stat_type_id: 2)
+        .where(created_at: get_hourly_range(time_range.begin, hour))
+        .average(:value)
+      currents << Stat.where(stat_type_id: 3)
+        .where(created_at: get_hourly_range(time_range.begin, hour))
+        .average(:value)
+      pressures << Stat.where(stat_type_id: 1)
+        .where(created_at: get_hourly_range(time_range.begin, hour))
+        .average(:value)
+    end
+
+    data[:final_temps] = final_temps
+    data[:fat_levels] = fat_levels
+    data[:currents] = currents
+    data[:pressures] = pressures
     data
   end
 
@@ -225,6 +255,10 @@ class Report
     data[:end_time] =  time_range.end
 
     [time_range, data]
+  end
+
+  def self.get_hourly_range(start_time, hour)
+    start_time + hour.hours .. start_time + (hour + 1).hours
   end
 
   def self.get_time_range(params)

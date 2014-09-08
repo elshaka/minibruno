@@ -1,0 +1,15 @@
+report.set_layout tlf: 'reports/thinreports_layouts/averages'
+report.start_new_page do |page|
+  page.item(:title).value(@data[:title])
+  page.item(:start_time).value(@data[:start_time].strftime('%Y-%m-%d %l:%M %p'))
+  page.item(:end_time).value(@data[:end_time].strftime('%Y-%m-%d %l:%M %p'))
+
+  logger.debug @data[:final_temps]
+  start_time = @data[:start_time]
+  report.list(:table) do |table|
+    @data[:final_temps].each_with_index do |temp, index|
+      hour = (start_time + index.hours).strftime('%I:%M %P')
+      table.add_row hour: hour, final_temp: temp, fat_level: @data[:fat_levels][index], current: @data[:currents][index], pressure: @data[:pressures][index]
+    end
+  end
+end

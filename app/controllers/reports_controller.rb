@@ -58,4 +58,12 @@ class ReportsController < ApplicationController
       redirect_to reports_path
     end
   end
+
+  def averages
+    @data = Report.averages(params[:report])
+    if @data.nil?
+      flash[:alert] = 'No hay registros para generar el reporte'
+      redirect_to reports_path
+    end
+  end
 end
