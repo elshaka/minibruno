@@ -361,3 +361,12 @@ table.dataTable thead .sorting:after {
 .panel-orange a:hover {
     color: #df8a13;
 }
+
+#company-logo {
+    max-height: 50px;
+    margin-top: -10px;
+}
+
+#agromatic-logo {
+    padding: 10px;
+}
